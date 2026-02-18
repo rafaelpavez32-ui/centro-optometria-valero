@@ -34,9 +34,7 @@ body {
   line-height: 1.7;
   overflow-x: hidden;
   background-color: var(--white);
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3e%3cstyle%3etext%7bfont-family:monospace;font-weight:bold;fill:rgba(10, 14, 39, 0.03);%7d%3c/style%3e%3ctext x='20' y='60' font-size='70'%3eE%3c/text%3e%3ctext x='150' y='110' font-size='50'%3eE%3c/text%3e%3ctext x='40' y='180' font-size='35'%3eE%3c/text%3e%3ctext x='220' y='220' font-size='25'%3eE%3c/text%3e%3ctext x='120' y='270' font-size='18'%3eE%3c/text%3e%3c/svg%3e");
 }
-
 body.no-scroll {
   overflow: hidden;
 }
