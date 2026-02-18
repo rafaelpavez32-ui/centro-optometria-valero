@@ -3,7 +3,13 @@
   padding: 0;
   box-sizing: border-box;
 }
-
+html, body {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  position: relative;
+}
 :root {
   --primary: #0a0e27;
   --primary-light: #1a1f3a;
