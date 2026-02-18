@@ -23,24 +23,35 @@ document.body.classList.remove("no-scroll");
 }
 
 // 3. Comportamiento de la Barra de Navegación al hacer Scroll
-window.addEventListener("scroll", () => {
-const currentScrollY = window.scrollY;
+window.addEventListener('scroll', () => {
+  const currentScrollY = window.scrollY;
+  
+  // Si el menú móvil está abierto, la barra se queda fija
+  if (navWrapper && navWrapper.classList.contains('active')) {
+    navbar.classList.remove('navbar--hidden');
+    return;
+  }
 
-// Si el menú móvil está desplegado, no ocultamos la barra
-if (navWrapper && navWrapper.classList.contains("active")) {
-navbar.classList.remove("navbar--hidden");
-return;
-}
+  // Si estamos arriba del todo (o el scroll rebota), mostrar barra
+  if (currentScrollY <= 0) {
+    navbar.classList.remove('navbar--hidden');
+    lastScrollY = 0;
+    return;
+  }
 
-if (currentScrollY > lastScrollY && currentScrollY > 150) {
-// Desplazamiento hacia abajo: ocultar
-navbar.classList.add("navbar--hidden");
-} else {
-// Desplazamiento hacia arriba: mostrar
-navbar.classList.remove("navbar--hidden");
-}
-lastScrollY = currentScrollY <= 0 ? 0 : currentScrollY;
-});
+  // Si el movimiento es insignificante, no hacer nada
+  if (Math.abs(currentScrollY - lastScrollY) <= 5) return;
+
+  if (currentScrollY > lastScrollY && currentScrollY > 100) {
+    // Bajando: Ocultar
+    navbar.classList.add('navbar--hidden');
+  } else {
+    // Subiendo: Mostrar inmediatamente
+    navbar.classList.remove('navbar--hidden');
+  }
+  
+  lastScrollY = currentScrollY;
+}, { passive: true });
 
 // 4. Navegación Suave (Smooth Scroll)
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -102,22 +113,25 @@ observer.observe(card);
 });
 
 // 7. Configuración de Swiper (Carrusel de Reseñas)
-const reviewsCarousel = new Swiper(".reviews-carousel", {
-loop: true,
-speed: 7000,
-autoplay: {
-delay: 1,
-disableOnInteraction: false,
-},
-spaceBetween: 30,
-breakpoints: {
-768: {
-slidesPerView: 2,
-spaceBetween: 40,
-},
-1024: {
-slidesPerView: 3,
-spaceBetween: 50,
-},
-}
+const reviewsCarousel = new Swiper('.reviews-carousel', {
+  loop: true,
+  speed: 5000, 
+  autoplay: {
+    delay: 0,
+    disableOnInteraction: false, // Importante: No se detiene al tocar el móvil
+    pauseOnMouseEnter: false,
+  },
+  slidesPerView: 1,
+  spaceBetween: 20,
+  freeMode: true,
+  breakpoints: {
+    768: {
+      slidesPerView: 2,
+      spaceBetween: 30,
+    },
+    1024: {
+      slidesPerView: 3,
+      spaceBetween: 40,
+    },
+  }
 });
