@@ -38,8 +38,10 @@ body {
   font-family: var(--font);
   color: var(--text);
   line-height: 1.7;
-  overflow-x: hidden; /* Esto es vital para que no se mueva a los lados */
+  overflow-x: hidden; /* Esto evita que la web se mueva hacia los lados */
   background-color: var(--white);
+  margin: 0;
+  padding: 0;
 }
 body.no-scroll {
   overflow: hidden;
