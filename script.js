@@ -23,7 +23,6 @@ document.body.classList.remove("no-scroll");
 }
 
 // 3. Comportamiento de la Barra de Navegación al hacer Scroll
-// PEGA ESTO:
 window.addEventListener('scroll', () => {
   const currentScrollY = window.scrollY;
   
