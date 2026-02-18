@@ -850,6 +850,13 @@ body.no-scroll {
 @media (max-width: 768px) {
   .navbar .container {
     justify-content: space-between;
+    padding: 0 15px;
+  }
+
+  /* ESTO ARREGLA EL DESORDEN: Achicamos el logo para que quepa el botón al lado */
+  .logo-png {
+    width: 80px; 
+    height: auto;
   }
 
   .hamburger {
@@ -857,15 +864,10 @@ body.no-scroll {
     order: 3;
   }
 
-  .hamburger.active .bar:nth-child(2) {
-    opacity: 0;
-  }
-  .hamburger.active .bar:nth-child(1) {
-    transform: translateY(9px) rotate(45deg);
-  }
-  .hamburger.active .bar:nth-child(3) {
-    transform: translateY(-9px) rotate(-45deg);
-  }
+  /* Animación de las barritas (X) */
+  .hamburger.active .bar:nth-child(2) { opacity: 0; }
+  .hamburger.active .bar:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+  .hamburger.active .bar:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
 
   .nav-wrapper {
     position: fixed;
@@ -877,7 +879,7 @@ body.no-scroll {
     justify-content: center;
     align-items: center;
     background: var(--primary);
-    gap: calc(var(--spacing) * 4);
+    gap: 2rem;
     transition: 0.4s ease;
     z-index: 1000;
   }
@@ -888,51 +890,26 @@ body.no-scroll {
 
   .nav-links {
     flex-direction: column;
-    gap: calc(var(--spacing) * 3);
+    gap: 2rem;
     text-align: center;
   }
 
-  .hero-content {
-    grid-template-columns: 1fr;
+  /* Botón dentro del menú móvil */
+  .cita-btn {
+    padding: 10px 20px;
+    font-size: 0.9rem;
   }
 
-  .hero-decoration {
-    display: none;
-  }
-
-  .hero-title {
-    font-size: calc(var(--spacing) * 2.2);
-  }
-
-  .contacto-content {
-    grid-template-columns: 1fr;
-  }
-
-  .equipo-grid {
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  }
-
-  .form-row {
-    grid-template-columns: 1fr;
-  }
+  .hero-content { grid-template-columns: 1fr; text-align: center; }
+  .hero-decoration { display: none; }
+  .hero-title { font-size: 2rem; }
+  .contacto-content { grid-template-columns: 1fr; }
+  .equipo-grid { grid-template-columns: 1fr; }
+  .form-row { grid-template-columns: 1fr; }
 }
 
+/* Pantallas muy pequeñas */
 @media (max-width: 480px) {
-  .section-title {
-    font-size: calc(var(--spacing) * 1.6);
-  }
-
-  .hero-title {
-    font-size: calc(var(--spacing) * 1.8);
-  }
-
-  .servicios-grid,
-  .tech-grid,
-  .marcas-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .contacto-info {
-    grid-template-columns: 1fr;
-  }
+  .section-title { font-size: 1.5rem; }
+  .servicios-grid, .tech-grid, .marcas-grid { grid-template-columns: 1fr; }
 }
