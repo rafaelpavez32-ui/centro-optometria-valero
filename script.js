@@ -23,27 +23,26 @@ document.body.classList.remove("no-scroll");
 }
 
 // 3. Comportamiento de la Barra de Navegación al hacer Scroll
+// PEGA ESTO:
 window.addEventListener('scroll', () => {
   const currentScrollY = window.scrollY;
   
-  // Si el menú móvil está abierto, la barra se queda fija
+  // 1. Si el menú móvil está abierto, mantener visible
   if (navWrapper && navWrapper.classList.contains('active')) {
     navbar.classList.remove('navbar--hidden');
     return;
   }
 
-  // Si estamos arriba del todo (o el scroll rebota), mostrar barra
-  if (currentScrollY <= 0) {
+  // 2. Si estamos cerca del inicio (menos de 80px), siempre mostrar
+  if (currentScrollY < 80) {
     navbar.classList.remove('navbar--hidden');
-    lastScrollY = 0;
+    lastScrollY = currentScrollY;
     return;
   }
 
-  // Si el movimiento es insignificante, no hacer nada
-  if (Math.abs(currentScrollY - lastScrollY) <= 5) return;
-
-  if (currentScrollY > lastScrollY && currentScrollY > 100) {
-    // Bajando: Ocultar
+  // 3. Comparación simple de dirección
+  if (currentScrollY > lastScrollY) {
+    // Bajando: Ocultar si ya pasamos el umbral inicial
     navbar.classList.add('navbar--hidden');
   } else {
     // Subiendo: Mostrar inmediatamente
