@@ -32,7 +32,7 @@ body {
   font-family: var(--font);
   color: var(--text);
   line-height: 1.7;
-  overflow-x: hidden;
+  overflow-x: hidden; /* Esto es vital para que no se mueva a los lados */
   background-color: var(--white);
 }
 body.no-scroll {
