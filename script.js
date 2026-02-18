@@ -79,14 +79,21 @@ const navbar = document.querySelector('.navbar');
 let lastScrollY = window.scrollY;
 
 window.addEventListener('scroll', () => {
-  if (lastScrollY < window.scrollY && window.scrollY > 150) {
+  const currentScrollY = window.scrollY;
+  // Si el menú está abierto, mantener la barra visible y no hacer nada más.
+  if (navWrapper.classList.contains('active')) {
+    navbar.classList.remove('navbar--hidden');
+    return;
+  }
+
+  if (currentScrollY > lastScrollY && currentScrollY > 150) {
     // Scroll hacia abajo
     navbar.classList.add('navbar--hidden');
   } else {
     // Scroll hacia arriba
     navbar.classList.remove('navbar--hidden');
   }
-  lastScrollY = window.scrollY;
+  lastScrollY = currentScrollY <= 0 ? 0 : currentScrollY;
 });
 
 // Inicialización de Swiper para el carrusel de reseñas
@@ -111,4 +118,24 @@ const reviewsCarousel = new Swiper('.reviews-carousel', {
       spaceBetween: 50,
     },
   }
+});
+
+// Menú hamburguesa para móvil
+const hamburger = document.querySelector(".hamburger");
+const navWrapper = document.querySelector(".nav-wrapper");
+
+hamburger.addEventListener("click", () => {
+  hamburger.classList.toggle("active");
+  navWrapper.classList.toggle("active");
+  document.body.classList.toggle('no-scroll');
+});
+
+document.querySelectorAll(".nav-wrapper a, .nav-wrapper .cita-btn").forEach(link => {
+  link.addEventListener("click", () => {
+    if (hamburger.classList.contains('active')) {
+      hamburger.classList.remove("active");
+      navWrapper.classList.remove("active");
+      document.body.classList.remove('no-scroll');
+    }
+  });
 });
