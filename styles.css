@@ -919,3 +919,7 @@ body.no-scroll {
   .section-title { font-size: 1.5rem; }
   .servicios-grid, .tech-grid, .marcas-grid { grid-template-columns: 1fr; }
 }
+/* Movimiento fluido para el carrusel de reseñas */
+.reviews-carousel .swiper-wrapper {
+  transition-timing-function: linear !important;
+}
