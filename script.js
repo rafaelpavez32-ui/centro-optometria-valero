@@ -21,29 +21,34 @@ if (hamburger && navWrapper) {
   });
 }
 
-// 3. Comportamiento de la Barra de Navegación (Corregido)
+// 3. Comportamiento de la Barra de Navegación (Versión Ultra-Respuesta)
 window.addEventListener('scroll', () => {
   const currentScrollY = window.scrollY;
   
+  // 1. Si el menú móvil está abierto, la barra se queda quieta
   if (navWrapper && navWrapper.classList.contains('active')) {
     navbar.classList.remove('navbar--hidden');
     return;
   }
 
-  // Si estamos muy arriba, mostrar siempre
-  if (currentScrollY < 50) {
+  // 2. Si estamos cerca del tope de la web, FORZAR que aparezca siempre
+  if (currentScrollY < 100) {
     navbar.classList.remove('navbar--hidden');
     lastScrollY = currentScrollY;
     return;
   }
 
-  // Lógica de dirección: Subir muestra, Bajar oculta
-  if (currentScrollY > lastScrollY) {
-    navbar.classList.add('navbar--hidden');
-  } else {
+  // 3. Detectar dirección:
+  // Si la posición actual es MENOR que la anterior, es que estamos SUBIENDO.
+  if (currentScrollY < lastScrollY) {
+    // SUBIENDO -> Mostrar barra
     navbar.classList.remove('navbar--hidden');
+  } else {
+    // BAJANDO -> Ocultar barra
+    navbar.classList.add('navbar--hidden');
   }
   
+  // Actualizar posición
   lastScrollY = currentScrollY;
 }, { passive: true });
 
