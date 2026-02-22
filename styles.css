@@ -16,7 +16,7 @@ html, body {
   --secondary: #004a87;
   --accent: #0066cc;
   --accent-light: #0080ff;
-  --light: #f8f9fa;
+  --light: rgba(255, 255, 255, 0.6); /* Transparente para efecto cristal */
   --white: #ffffff;
   --text: #2d3e50;
   --text-light: #6b7280;
@@ -32,6 +32,7 @@ html, body {
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 120px; /* Evita que el menú fijo tape el título de la sección al hacer scroll */
 }
 
 body {
@@ -39,7 +40,14 @@ body {
   color: var(--text);
   line-height: 1.7;
   overflow-x: hidden; /* Esto evita que la web se mueva hacia los lados */
-  background-color: var(--white);
+  /* FONDO "SUPER MEGA WOW": Degradado sutil y moderno fijo */
+  background: 
+    radial-gradient(at 0% 0%, rgba(0, 102, 204, 0.15) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(0, 74, 135, 0.1) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(0, 255, 255, 0.1) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, rgba(0, 102, 204, 0.05) 0px, transparent 50%),
+    #f0f4f8;
+  background-attachment: fixed; /* El fondo se queda quieto al hacer scroll (efecto profundidad) */
   margin: 0;
   padding: 0;
 }
@@ -58,13 +66,19 @@ body.no-scroll {
    ======================================== */
 
 .navbar {
-  background: var(--primary);
+  /* EFECTO CRISTAL (Glassmorphism) */
+  background: rgba(10, 14, 39, 0.85); /* Semi-transparente */
+  backdrop-filter: blur(12px); /* Desenfoque potente */
+  -webkit-backdrop-filter: blur(12px); /* Soporte Safari */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Borde sutil brillante */
   color: var(--white);
-  position: sticky;
+  position: fixed; /* Cambiado de sticky a fixed para mejor control */
+  width: 100%;
+  left: 0;
   top: 0;
   z-index: 1000;
   padding: calc(var(--spacing) * 1.2) 0;
-  box-shadow: var(--shadow);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
   transform: translateY(0);
 }
@@ -197,16 +211,13 @@ body.no-scroll {
   align-items: center;
 }
 
-.hero-text {
-  animation: fadeInUp 0.8s ease;
-}
-
 .hero-title {
   font-size: calc(var(--spacing) * 3);
   font-weight: 800;
   margin-bottom: calc(var(--spacing) * 1.5);
   line-height: 1.2;
   letter-spacing: -1px;
+  animation: fadeInUp 0.8s ease forwards;
 }
 
 .hero-subtitle {
@@ -215,6 +226,8 @@ body.no-scroll {
   margin-bottom: calc(var(--spacing) * 2.5);
   max-width: 500px;
   line-height: 1.8;
+  animation: fadeInUp 0.8s ease 0.2s forwards;
+  opacity: 0; /* Estado inicial para la animación con delay */
 }
 
 .hero-btn {
@@ -230,6 +243,8 @@ body.no-scroll {
   letter-spacing: 0.5px;
   text-transform: uppercase;
   box-shadow: 0 10px 30px rgba(0, 102, 204, 0.3);
+  animation: fadeInUp 0.8s ease 0.4s forwards;
+  opacity: 0; /* Estado inicial para la animación con delay */
 }
 
 .hero-btn:hover {
@@ -255,6 +270,7 @@ body.no-scroll {
   top: 50%;
   right: 0;
   transform: translateY(-50%);
+  will-change: transform;
   animation: spin 20s linear infinite;
 }
 
@@ -263,6 +279,7 @@ body.no-scroll {
   height: 200px;
   top: 0;
   right: 100px;
+  will-change: transform;
   animation: spin 30s linear infinite reverse;
 }
 
@@ -271,6 +288,7 @@ body.no-scroll {
   height: 150px;
   bottom: 0;
   right: 50px;
+  will-change: transform;
   animation: spin 25s linear infinite;
 }
 
@@ -321,43 +339,66 @@ body.no-scroll {
 }
 
 /* ========================================
+   ANIMACIONES SCROLL
+   ======================================== */
+
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(50px) rotateX(-10deg);
+  transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transform-style: preserve-3d;
+}
+.animate-on-scroll.is-visible {
+  opacity: 1;
+  transform: translateY(0) rotateX(0);
+}
+/* ========================================
    SERVICIOS
    ======================================== */
 
 .servicios {
   padding: calc(var(--spacing) * 8) var(--spacing);
-  background: var(--light);
+  background: transparent; /* Dejamos ver el fondo global */
+  perspective: 2000px; /* Perspectiva para el efecto 3D de las tarjetas */
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 800px; /* Mejora rendimiento de renderizado */
 }
 
 .servicios-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Reducido para mejor ajuste en tablets */
   gap: calc(var(--spacing) * 2.5);
 }
 
 .servicio-card {
-  background: var(--white);
+  /* TARJETA CRISTAL 3D */
+  background: rgba(255, 255, 255, 0.7); /* Blanco translúcido */
+  backdrop-filter: blur(10px); /* Desenfoque del fondo */
+  border: 1px solid rgba(255, 255, 255, 0.8); /* Borde brillante */
   padding: calc(var(--spacing) * 2.5);
-  border-radius: 10px;
-  box-shadow: var(--shadow);
+  border-radius: 20px; /* Bordes más redondeados y modernos */
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1); /* Sombra suave de color */
   transition: var(--transition);
   border-top: 4px solid var(--accent);
   position: relative;
+  will-change: transform; /* Mejora de rendimiento */
 }
 
 .servicio-card:hover {
-  transform: translateY(-8px);
-  box-shadow: var(--shadow-lg);
+  /* El transform se controla con JS para el efecto 3D */
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 20px 50px rgba(0, 102, 204, 0.2); /* Sombra azulada al hover */
 }
 
-.servicio-number {
-  font-size: calc(var(--spacing) * 2.5);
-  font-weight: 800;
+.servicio-icon {
   color: var(--accent);
-  opacity: 0.15;
-  position: absolute;
-  top: calc(var(--spacing) * 1.5);
-  right: calc(var(--spacing) * 2);
+  margin-bottom: calc(var(--spacing) * 1.5);
+  transition: var(--transition);
+}
+
+.servicio-card:hover .servicio-icon {
+  transform: scale(1.1);
+  color: var(--accent-light);
 }
 
 .servicio-card h3 {
@@ -394,7 +435,10 @@ body.no-scroll {
 
 .tecnologia {
   padding: calc(var(--spacing) * 8) var(--spacing);
-  background: var(--white);
+  background: transparent;
+  perspective: 1500px;
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 600px;
 }
 
 .tech-grid {
@@ -405,29 +449,33 @@ body.no-scroll {
 
 .tech-card {
   padding: calc(var(--spacing) * 2.5);
-  border-radius: 10px;
-  background: var(--light);
-  transition: var(--transition);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.5); /* Más transparente */
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: var(--shadow);
+  transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); /* Transición mega suave */
   text-align: center;
 }
 
 .tech-card:hover {
-  background: var(--primary);
+  background: var(--primary); /* Color sólido para permitir transición suave */
   color: var(--white);
   transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(10, 14, 39, 0.3);
+  border-color: transparent;
 }
 
 .tech-icon {
   margin-bottom: calc(var(--spacing) * 1.5);
+  color: var(--accent);
+  transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-.icon-bg {
-  width: 80px;
-  height: 80px;
-  background: var(--accent);
-  border-radius: 50%;
-  display: inline-block;
-  opacity: 0.15;
+.tech-icon svg {
+  width: 64px;
+  height: 64px;
+  transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .tech-card h3 {
@@ -435,6 +483,11 @@ body.no-scroll {
   margin-bottom: calc(var(--spacing) * 0.8);
   font-weight: 700;
   color: var(--primary);
+}
+
+.tech-card:hover .tech-icon {
+  color: var(--white);
+  transform: scale(1.1);
 }
 
 .tech-card:hover h3 {
@@ -445,6 +498,7 @@ body.no-scroll {
   color: var(--text-light);
   font-size: 0.95rem;
   line-height: 1.7;
+  transition: color 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .tech-card:hover p {
@@ -457,7 +511,10 @@ body.no-scroll {
 
 .marcas {
   padding: calc(var(--spacing) * 8) var(--spacing);
-  background: var(--light);
+  background: transparent;
+  perspective: 1500px;
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 400px;
 }
 
 .marcas-grid {
@@ -467,9 +524,11 @@ body.no-scroll {
 }
 
 .marca-item {
-  background: var(--white);
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
   padding: calc(var(--spacing) * 2.5);
-  border-radius: 10px;
+  border-radius: 15px;
   text-align: center;
   font-weight: 600;
   color: var(--primary);
@@ -490,7 +549,10 @@ body.no-scroll {
 
 .equipo {
   padding: calc(var(--spacing) * 8) var(--spacing);
-  background: var(--white);
+  background: transparent;
+  perspective: 1500px;
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 600px;
 }
 
 .equipo-grid {
@@ -524,14 +586,16 @@ body.no-scroll {
   height: 100%;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
-  border-radius: 10px;
-  box-shadow: var(--shadow);
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: calc(var(--spacing) * 2);
-  background: var(--white);
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.9);
 }
 
 .equipo-card-front {
@@ -549,7 +613,7 @@ body.no-scroll {
   width: 100%;
   height: 200px; /* Altura ajustada para encajar en la tarjeta */
   background: linear-gradient(135deg, var(--accent), var(--secondary));
-  border-radius: 10px;
+  border-radius: 15px;
   margin-bottom: calc(var(--spacing) * 1.5);
   box-shadow: var(--shadow);
 }
@@ -590,6 +654,31 @@ body.no-scroll {
 
 .reviews-carousel .swiper-wrapper {
   transition-timing-function: linear !important;
+}
+
+/* ========================================
+   BOTÓN WHATSAPP
+   ======================================== */
+.whatsapp-btn {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background-color: #25d366;
+  color: white;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  z-index: 9999;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.whatsapp-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.25);
 }
 
 .review-card {
@@ -654,7 +743,7 @@ body.no-scroll {
 
 .google-references .swiper-button-next:hover,
 .google-references .swiper-button-prev:hover {
-  opacity: 1;
+  opacity: 1; 
   transform: scale(1.1);
 }
 
@@ -663,20 +752,13 @@ body.no-scroll {
   font-size: 2rem;
 }
 
-/* Responsividad simple */
-@media (max-width: 768px) {
-  .google-card {
-    padding: calc(var(--spacing) * 2);
-  }
-}
-
 /* ========================================
    CONTACTO
    ======================================== */
 
 .contacto {
   padding: calc(var(--spacing) * 5) var(--spacing);
-  background: var(--light);
+  background: transparent;
 }
 
 .contacto-content {
@@ -694,10 +776,12 @@ body.no-scroll {
 }
 
 .info-block {
-  background: var(--white);
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
   padding: calc(var(--spacing) * 2);
-  border-radius: 10px;
-  box-shadow: var(--shadow);
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.05);
 }
 
 .info-block h3 {
@@ -714,9 +798,9 @@ body.no-scroll {
 }
 
 .map-container {
-  border-radius: 10px;
+  border-radius: 20px;
   overflow: hidden;
-  box-shadow: var(--shadow);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.1);
   height: 100%;
 }
 
@@ -727,10 +811,12 @@ body.no-scroll {
 }
 
 .contacto-form {
-  background: var(--white);
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
   padding: calc(var(--spacing) * 2);
-  border-radius: 10px;
-  box-shadow: var(--shadow);
+  border-radius: 20px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.1);
   display: flex;
   flex-direction: column;
   gap: var(--spacing);
@@ -758,7 +844,7 @@ body.no-scroll {
 .form-group textarea {
   padding: calc(var(--spacing) * 0.9);
   border: 2px solid var(--border);
-  border-radius: 6px;
+  border-radius: 10px;
   font-family: var(--font);
   font-size: 1rem;
   transition: var(--transition);
@@ -854,15 +940,29 @@ body.no-scroll {
    RESPONSIVE
    ======================================== */
 
+@media (max-width: 992px) {
+  .hero-title {
+    font-size: 2.5rem;
+  }
+  
+  .hero-content {
+    gap: calc(var(--spacing) * 2);
+  }
+}
+
 @media (max-width: 768px) {
+  /* Ajuste de variables para móviles para reducir espacios */
+  :root {
+    --spacing: 0.8rem;
+  }
+
   .navbar .container {
     justify-content: space-between;
     padding: 0 15px;
   }
 
-  /* ESTO ARREGLA EL DESORDEN: Achicamos el logo para que quepa el botón al lado */
   .logo-png {
-    width: 80px; 
+    width: 90px; 
     height: auto;
   }
 
@@ -876,49 +976,115 @@ body.no-scroll {
   .hamburger.active .bar:nth-child(1) { transform: translateY(9px) rotate(45deg); }
   .hamburger.active .bar:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
 
+  /* Menú Móvil Pantalla Completa Mejorado */
   .nav-wrapper {
     position: fixed;
-    left: -100%;
+    left: 0;
     top: 0;
     height: 100vh;
     width: 100%;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: var(--primary);
+    background: rgba(10, 14, 39, 0.98); /* Fondo casi sólido para legibilidad en móvil */
+    backdrop-filter: blur(15px);
     gap: 2rem;
-    transition: 0.4s ease;
-    z-index: 1000;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateX(100%); /* Oculto hacia la derecha */
+    z-index: 999;
+    padding: 2rem;
   }
 
   .nav-wrapper.active {
-    left: 0;
+    transform: translateX(0);
   }
 
   .nav-links {
     flex-direction: column;
-    gap: 2rem;
+    gap: 1.5rem;
+    text-align: center;
+    width: 100%;
+  }
+
+  .nav-links a {
+    font-size: 1.3rem;
+    display: block;
+    padding: 10px;
+  }
+
+  .cita-btn {
+    width: 100%;
+    max-width: 280px;
+    text-align: center;
+    padding: 15px;
+    font-size: 1rem;
+  }
+
+  /* Hero y Secciones */
+  .hero { 
+    padding: calc(var(--spacing) * 6) var(--spacing);
+    min-height: auto;
     text-align: center;
   }
+  
+  .hero-content { 
+    grid-template-columns: 1fr; 
+    gap: 2rem;
+  }
+  
+  .hero-decoration { display: none; }
+  .hero-title { font-size: 2.2rem; }
+  .hero-subtitle { font-size: 1rem; }
 
-  /* Botón dentro del menú móvil */
-  .cita-btn {
-    padding: 10px 20px;
-    font-size: 0.9rem;
+  .section-title { font-size: 1.8rem; }
+  
+  .servicios, .tecnologia, .marcas, .equipo, .contacto, .google-references {
+    padding: calc(var(--spacing) * 5) var(--spacing);
   }
 
-  .hero-content { grid-template-columns: 1fr; text-align: center; }
-  .hero-decoration { display: none; }
-  .hero-title { font-size: 2rem; }
-  .contacto-content { grid-template-columns: 1fr; }
-  .equipo-grid { grid-template-columns: 1fr; }
-  .form-row { grid-template-columns: 1fr; }
+  /* Forzar 1 columna en móviles para evitar scroll horizontal */
+  .servicios-grid, 
+  .contacto-content, 
+  .equipo-grid, 
+  .form-row,
+  .footer-content { 
+    grid-template-columns: 1fr; 
+  }
+
+  .tech-grid {
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  }
+
+  .equipo-grid {
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  .map-container {
+    height: 300px; /* Mapa más bajo en móvil */
+  }
+
+  .footer-content {
+    text-align: center;
+    gap: 2rem;
+  }
+
+  .whatsapp-btn {
+    width: 50px;
+    height: 50px;
+    bottom: 20px;
+    right: 20px;
+  }
 }
 
 /* Pantallas muy pequeñas */
 @media (max-width: 480px) {
+  .hero-title { font-size: 1.8rem; }
   .section-title { font-size: 1.5rem; }
-  .servicios-grid, .tech-grid, .marcas-grid { grid-template-columns: 1fr; }
+  
+  .tech-grid, .marcas-grid { 
+    grid-template-columns: 1fr; 
+  }
 }
 /* Movimiento fluido para el carrusel de reseñas */
 .reviews-carousel .swiper-wrapper {
