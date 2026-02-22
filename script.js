@@ -2,7 +2,9 @@
 const hamburger = document.querySelector(".hamburger");
 const navWrapper = document.querySelector(".nav-wrapper");
 const navbar = document.querySelector(".navbar");
+const heroCircles = document.querySelectorAll(".hero-decoration .decoration-circle");
 let lastScrollY = window.scrollY;
+let ticking = false;
 
 // 2. Control del Menú Móvil
 if (hamburger && navWrapper) {
@@ -23,33 +25,47 @@ if (hamburger && navWrapper) {
 
 // 3. Comportamiento de la Barra de Navegación (Versión Ultra-Respuesta)
 window.addEventListener('scroll', () => {
-  const currentScrollY = window.scrollY;
-  
-  // 1. Si el menú móvil está abierto, la barra se queda quieta
-  if (navWrapper && navWrapper.classList.contains('active')) {
-    navbar.classList.remove('navbar--hidden');
-    return;
-  }
+  if (!ticking) {
+    window.requestAnimationFrame(() => {
+      const currentScrollY = window.scrollY;
 
-  // 2. Si estamos cerca del tope de la web, FORZAR que aparezca siempre
-  if (currentScrollY < 100) {
-    navbar.classList.remove('navbar--hidden');
-    lastScrollY = currentScrollY;
-    return;
-  }
+      // Efecto Parallax para los círculos del Hero
+      if (heroCircles.length > 0) {
+        heroCircles[0].style.transform = `translateY(${currentScrollY * 0.1}px) rotate(${currentScrollY * 0.1}deg)`;
+        heroCircles[1].style.transform = `translateY(${currentScrollY * 0.2}px) rotate(-${currentScrollY * 0.15}deg)`;
+        heroCircles[2].style.transform = `translateY(${currentScrollY * 0.15}px) rotate(${currentScrollY * 0.2}deg)`;
+      }
+      
+      // 1. Si el menú móvil está abierto, la barra se queda quieta
+      if (navWrapper && navWrapper.classList.contains('active')) {
+        navbar.classList.remove('navbar--hidden');
+        ticking = false;
+        return;
+      }
 
-  // 3. Detectar dirección:
-  // Si la posición actual es MENOR que la anterior, es que estamos SUBIENDO.
-  if (currentScrollY < lastScrollY) {
-    // SUBIENDO -> Mostrar barra
-    navbar.classList.remove('navbar--hidden');
-  } else {
-    // BAJANDO -> Ocultar barra
-    navbar.classList.add('navbar--hidden');
+      // 2. Si estamos cerca del tope de la web, FORZAR que aparezca siempre
+      if (currentScrollY < 100) {
+        navbar.classList.remove('navbar--hidden');
+        lastScrollY = currentScrollY;
+        ticking = false;
+        return;
+      }
+
+      // 3. Detectar dirección:
+      if (currentScrollY > lastScrollY) {
+        // BAJANDO -> Ocultar barra
+        navbar.classList.add('navbar--hidden');
+      } else if (currentScrollY < lastScrollY) {
+        // SUBIENDO -> Mostrar barra
+        navbar.classList.remove('navbar--hidden');
+      }
+      
+      // Actualizar posición
+      lastScrollY = currentScrollY;
+      ticking = false;
+    });
+    ticking = true;
   }
-  
-  // Actualizar posición
-  lastScrollY = currentScrollY;
 }, { passive: true });
 
 // 4. Navegación Suave (Smooth Scroll)
