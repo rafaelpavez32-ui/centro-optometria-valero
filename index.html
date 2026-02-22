@@ -8,6 +8,9 @@
   <link rel="stylesheet" href="styles.css">
   <link rel="icon" href="logo.png">
   <!-- Link a Swiper's CSS -->
+  <link rel="preconnect" href="https://unpkg.com">
+  <link rel="dns-prefetch" href="https://unpkg.com">
+  <link rel="dns-prefetch" href="https://www.google.com">
   <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
 </head>
 <body>
@@ -15,7 +18,7 @@
   <!-- NAVEGACIÓN -->
   <nav class="navbar">
     <div class="container">
-      <img src="logo.png" alt="imagen-logo-valero" class="logo-png">
+      <img src="logo.png" alt="imagen-logo-valero" class="logo-png" width="120" height="75" loading="eager">
       
       <div class="nav-wrapper">
         <div class="nav-links">
@@ -62,60 +65,78 @@
       <div class="servicios-grid">
         
         <div class="servicio-card">
-          <div class="servicio-number">01</div>
+          <div class="servicio-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+          </div>
           <h3>Exámenes visuales completos</h3>
           <p>Diagnóstico integral de tu salud ocular mediante tecnología de vanguardia para detectar graduaciones y patologías.</p>
           
         </div>
 
         <div class="servicio-card">
-          <div class="servicio-number">02</div>
+          <div class="servicio-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="15" r="4"/><circle cx="18" cy="15" r="4"/><path d="M14 15a2 2 0 0 0-2-2 2 2 0 0 0-2 2"/><path d="M2.5 13L5 7c.7-1.3 1.4-2 3-2"/><path d="M21.5 13L19 7c-.7-1.3-1.5-2-3-2"/></svg>
+          </div>
           <h3>Progresivos</h3>
           <p>Lentes de alta precisión que combinan visión de cerca, intermedia y lejos en una sola pieza con transiciones suaves.</p>
    
         </div>
 
         <div class="servicio-card">
-          <div class="servicio-number">03</div>
+          <div class="servicio-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          </div>
           <h3>Control de la Miopia</h3>
           <p>Tratamientos especializados y personalizados para frenar el avance de la miopía en niños y jóvenes.</p>
           
         </div>
 
         <div class="servicio-card">
-          <div class="servicio-number">04</div>
+          <div class="servicio-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><circle cx="12" cy="12" r="4"/></svg>
+          </div>
           <h3>Contactología avanzada</h3>
           <p>Adaptación de lentes de contacto especiales para condiciones complejas como queratocono o astigmatismos elevados.</p>
           
         </div>
 
         <div class="servicio-card">
-          <div class="servicio-number">05</div>
+          <div class="servicio-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9 13s1.5 2 3 2 3-2 3-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+          </div>
           <h3>Vision infantil</h3>
           <p>Cuidado especializado para los más pequeños, detectando problemas de desarrollo visual a tiempo para un futuro brillante.</p>
           
         </div>
 
         <div class="servicio-card">
-          <div class="servicio-number">06</div>
+          <div class="servicio-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+          </div>
           <h3>Terapia visual</h3>
           <p>Programa de ejercicios personalizados para reeducar el sistema visual y mejorar el rendimiento en lectura y trabajo.</p>
         
         </div>
         <div class="servicio-card">
-          <div class="servicio-number">07</div>
+          <div class="servicio-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+          </div>
           <h3>Baja Visión</h3>
           <p>Ayudas ópticas y rehabilitación para pacientes con pérdida visual severa que no se corrige con gafas convencionales.</p>
         
         </div>
         <div class="servicio-card">
-          <div class="servicio-number">08</div>
+          <div class="servicio-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+          </div>
           <h3>Retinografía</h3>
           <p>Captura digital detallada del fondo de ojo para el seguimiento preventivo de la retina y el nervio óptico.</p>
          
         </div>
         <div class="servicio-card">
-          <div class="servicio-number">09</div>
+          <div class="servicio-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 17L12 22L22 17"/><path d="M2 12L12 17L22 12"/><path d="M12 2L2 7L12 12L22 7L12 2Z"/></svg>
+          </div>
           <h3>OCT</h3>
           <p>Escáner de alta resolución que permite analizar las capas de la retina con precisión microscópica.</p>
          
@@ -137,7 +158,7 @@
       <div class="tech-grid">
         <div class="tech-card">
           <div class="tech-icon">
-            <span class="icon-bg"></span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="5"/></svg>
           </div>
           <h3>Topografía Corneal</h3>
           <p>Mapeo preciso de la córnea para diagnóstico de astigmatismo y queratocono</p>
@@ -145,7 +166,7 @@
 
         <div class="tech-card">
           <div class="tech-icon">
-            <span class="icon-bg"></span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 12l10 5 10-5"/><path d="M2 17l10 5 10-5"/></svg>
           </div>
           <h3>OCT Digital</h3>
           <p>Tomografía óptica coherente para visualización de estructuras internas del ojo</p>
@@ -153,7 +174,7 @@
 
         <div class="tech-card">
           <div class="tech-icon">
-            <span class="icon-bg"></span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="1"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5.636 5.636l1.414 1.414M16.95 16.95l1.414 1.414M5.636 18.364l1.414-1.414M16.95 7.05l1.414-1.414"/></svg>
           </div>
           <h3>Campo Visual Computarizado</h3>
           <p>Evaluación del campo visual periférico para detección temprana de glaucoma</p>
@@ -161,7 +182,7 @@
 
         <div class="tech-card">
           <div class="tech-icon">
-            <span class="icon-bg"></span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
           </div>
           <h3>Retinografía Digital</h3>
           <p>Fotografía de alta resolución de la retina con análisis computarizado</p>
@@ -181,13 +202,12 @@
       
       <div class="marcas-grid">
         <div class="marca-item">Ray-Ban</div>
-        <div class="marca-item">Oakley</div>
-        <div class="marca-item">Prada</div>
-        <div class="marca-item">Gucci</div>
-        <div class="marca-item">Versace</div>
+        <div class="marca-item">Live Love</div>
         <div class="marca-item">Tom Ford</div>
-        <div class="marca-item">Burberry</div>
-        <div class="marca-item">Dior</div>
+        <div class="marca-item">Digi</div>
+        <div class="marca-item">Modo</div>
+        <div class="marca-item">ProDesign</div>
+        <div class="marca-item">FaceAFace</div>
       </div>
     </div>
   </section>
@@ -305,6 +325,11 @@
         </div>
       </div>
     </div>
+
+    <!-- Botón para dejar reseña -->
+    <div style="text-align: center; margin-top: 2rem;">
+      <a href="https://search.google.com/local/writereview?placeid=ChIJyf3fOWB1MNYRAGCs5d7cZc8" target="_blank" rel="noopener noreferrer" class="google-btn">¡Déjanos tu reseña en Google!</a>
+    </div>
   </div>
 </section>
 
@@ -339,7 +364,7 @@
       <div class="contacto-content">
        <div class="map-container">
   <iframe 
-    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3143.123456789!2d-0.682266!3d37.9763!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd630756039e3def%3A0xcf65dcde5dde6400!2sCentro%20de%20Optometr%C3%ADa%20Valero!5e0!3m2!1ses!2ses!4v1710000000000!5m2!1ses!2ses" 
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6290.070754032663!2d-0.6912803649902323!3d37.976303705123875!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd630756039ffdc9%3A0xcf65dcde5dac6000!2sCentro%20de%20Optometr%C3%ADa%20Valero!5e0!3m2!1ses!2ses!4v1771802453849!5m2!1ses!2ses" 
     width="100%" 
     height="450" 
     style="border:0;" 
@@ -418,6 +443,13 @@
       </div>
     </div>
   </footer>
+
+  <!-- Botón de wasaaa -->
+  <a href="https://wa.me/34912345678" class="whatsapp-btn" target="_blank" rel="noopener noreferrer" aria-label="Contactar por WhatsApp">
+    <svg width="35" height="35" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.008-.57-.008-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+    </svg>
+  </a>
 
   <!-- Swiper's JS -->
   <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
