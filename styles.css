@@ -478,7 +478,7 @@ body.no-scroll {
 
 .tech-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: calc(var(--spacing) * 2.5);
 }
 
@@ -1090,8 +1090,8 @@ body.no-scroll {
 @media (max-width: 480px) {
   .hero-title { font-size: 1.8rem; }
   .section-title { font-size: 1.5rem; }
-  .servicios-grid, .tech-grid, .marcas-grid { grid-template-columns: 1fr; }
 }
+
 /* Movimiento fluido para el carrusel de reseñas */
 .reviews-carousel .swiper-wrapper {
   transition-timing-function: linear !important;
