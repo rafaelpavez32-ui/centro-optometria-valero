@@ -30,6 +30,54 @@ html, body {
   --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
+/* --- 1. Scrollbar Personalizada Moderna --- */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--primary);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 5px;
+  border: 2px solid var(--primary);
+}
+
+/* --- 2. Preloader de Carga --- */
+.preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--primary);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  transition: opacity 0.8s ease, visibility 0.8s ease;
+  opacity: 1;
+  visibility: visible;
+}
+
+.preloader-logo {
+  width: 150px;
+  filter: invert(1) brightness(1.2);
+  animation: pulse-logo 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse-logo {
+  0% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.1); opacity: 1; }
+  100% { transform: scale(1); opacity: 0.8; }
+}
+
+.preloader--hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 120px; /* Evita que el menú fijo tape el título de la sección al hacer scroll */
@@ -158,10 +206,18 @@ body.no-scroll {
   text-transform: uppercase;
 }
 
+/* Animación de Pulso para botones */
+@keyframes pulse-glow {
+  0% { box-shadow: 0 0 0 0 rgba(0, 102, 204, 0.7); }
+  70% { box-shadow: 0 0 0 10px rgba(0, 102, 204, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(0, 102, 204, 0); }
+}
+
 .cita-btn:hover {
   background: var(--accent-light);
   transform: translateY(-2px);
   box-shadow: 0 8px 20px rgba(0, 102, 204, 0.3);
+  animation: pulse-glow 1.5s infinite;
 }
 
 .hamburger {
@@ -216,6 +272,12 @@ body.no-scroll {
   line-height: 1.2;
   letter-spacing: -1px;
   animation: fadeInUp 0.8s ease forwards;
+  /* Efecto de texto moderno */
+  background: linear-gradient(to right, #ffffff, #a6c1ee);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 10px 30px rgba(0,0,0,0.2);
 }
 
 .hero-subtitle {
@@ -242,14 +304,14 @@ body.no-scroll {
   text-decoration: none;
   text-transform: uppercase;
   box-shadow: 0 10px 30px rgba(0, 102, 204, 0.3);
-  animation: fadeInUp 0.8s ease 0.4s forwards;
-  opacity: 0; /* Estado inicial para la animación con delay */
+  animation: fadeInUp 0.8s ease 0.4s both;
 }
 
 .hero-btn:hover {
   background: var(--accent-light);
   transform: translateY(-3px);
   box-shadow: 0 15px 40px rgba(0, 102, 204, 0.4);
+  animation: pulse-glow 1.5s infinite;
 }
 
 .hero-decoration {
@@ -413,16 +475,19 @@ body.no-scroll {
   padding: calc(var(--spacing) * 2.5);
   border-radius: 20px; /* Bordes más redondeados y modernos */
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1); /* Sombra suave de color */
-  transition: var(--transition);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Efecto rebote elástico */
   border-top: 4px solid var(--accent);
   position: relative;
   will-change: transform; /* Mejora de rendimiento */
+  overflow: hidden;
 }
 
 .servicio-card:hover {
   /* El transform se controla con JS para el efecto 3D */
   background: rgba(255, 255, 255, 0.95);
-  box-shadow: 0 20px 50px rgba(0, 102, 204, 0.2); /* Sombra azulada al hover */
+  box-shadow: 0 20px 50px rgba(0, 102, 204, 0.25); /* Sombra azulada al hover */
+  transform: translateY(-10px) scale(1.02);
+  border-top-color: var(--accent-light);
 }
 
 .servicio-icon {
@@ -432,7 +497,7 @@ body.no-scroll {
 }
 
 .servicio-card:hover .servicio-icon {
-  transform: scale(1.1);
+  transform: scale(1.2) rotate(10deg);
   color: var(--accent-light);
 }
 
@@ -491,6 +556,22 @@ body.no-scroll {
   box-shadow: var(--shadow);
   transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); /* Transición mega suave */
   text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Efecto de brillo (Shine) al pasar el ratón */
+.tech-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0) 100%);
+  transform: skewX(-25deg);
+  transition: 0.7s;
+  pointer-events: none;
 }
 
 .tech-card:hover {
@@ -499,6 +580,11 @@ body.no-scroll {
   transform: translateY(-5px);
   box-shadow: 0 15px 40px rgba(10, 14, 39, 0.3);
   border-color: transparent;
+}
+
+.tech-card:hover::after {
+  left: 150%;
+  transition: 0.7s ease-in-out;
 }
 
 .tech-icon {
@@ -603,7 +689,7 @@ body.no-scroll {
 
 .equipo-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: calc(var(--spacing) * 3);
 }
 
@@ -907,6 +993,7 @@ body.no-scroll {
   font-size: 1rem;
   transition: var(--transition);
   color: var(--text);
+  background: rgba(255, 255, 255, 0.5);
 }
 
 .form-group input:focus,
@@ -914,6 +1001,8 @@ body.no-scroll {
   outline: none;
   border-color: var(--accent);
   box-shadow: 0 0 0 4px rgba(0, 102, 204, 0.1);
+  transform: scale(1.01);
+  background: var(--white);
 }
 
 .submit-btn {
@@ -935,6 +1024,7 @@ body.no-scroll {
   background: var(--accent-light);
   transform: translateY(-2px);
   box-shadow: 0 10px 30px rgba(0, 102, 204, 0.3);
+  animation: pulse-glow 1.5s infinite;
 }
 
 /* ========================================
@@ -1079,20 +1169,56 @@ body.no-scroll {
   }
 
   .hero-content { grid-template-columns: 1fr; text-align: center; }
-  .hero-decoration { display: none; }
+  .hero-decoration { 
+    display: flex;
+    height: auto;
+    margin-top: calc(var(--spacing) * 2);
+  }
   .hero-title { font-size: 2rem; }
   .contacto-content { grid-template-columns: 1fr; }
-  .equipo-grid { grid-template-columns: 1fr; }
+  .tech-grid, .equipo-grid { grid-template-columns: repeat(2, 1fr); gap: var(--spacing); }
+  .servicios-grid { grid-template-columns: repeat(3, 1fr); gap: var(--spacing); }
   .form-row { grid-template-columns: 1fr; }
+
+  /* Ajustes para tarjetas en móvil para que no sean tan alargadas */
+  .servicio-card, .tech-card, .equipo-card-front, .equipo-card-back {
+    padding: calc(var(--spacing) * 1.5); /* Reducir padding interno */
+  }
+
+  /* Ajuste específico para Servicios (3 columnas = letra más pequeña) */
+  .servicio-card {
+    padding: 0.6rem;
+  }
+  .servicio-card h3 {
+    font-size: 0.8rem;
+    margin-bottom: 0.3rem;
+  }
+  .servicio-card p {
+    font-size: 0.65rem;
+    line-height: 1.3;
+    margin-bottom: 0.5rem;
+  }
+  .servicio-icon svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  /* Resto de tarjetas (2 columnas) */
+  .tech-card h3, .equipo-card h3 {
+    font-size: 1.1rem;
+  }
+  .tech-card p, .equipo-card .bio {
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+  .tech-icon svg {
+    width: 40px;
+    height: 40px;
+  }
 }
 
 /* Pantallas muy pequeñas */
 @media (max-width: 480px) {
   .hero-title { font-size: 1.8rem; }
   .section-title { font-size: 1.5rem; }
-}
-
-/* Movimiento fluido para el carrusel de reseñas */
-.reviews-carousel .swiper-wrapper {
-  transition-timing-function: linear !important;
 }

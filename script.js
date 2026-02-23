@@ -1,3 +1,17 @@
+// 0. Lógica del Preloader
+const hidePreloader = () => {
+  const preloader = document.querySelector('.preloader');
+  if (preloader) {
+    preloader.classList.add('preloader--hidden');
+  }
+};
+
+// Intentar ocultar cuando todo cargue
+window.addEventListener('load', () => setTimeout(hidePreloader, 500));
+
+// Fallback de seguridad: si tarda mucho (3s), quitarlo igual para no bloquear al usuario
+setTimeout(hidePreloader, 3000);
+
 // 1. Variables globales
 const hamburger = document.querySelector(".hamburger");
 const navWrapper = document.querySelector(".nav-wrapper");
