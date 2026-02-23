@@ -2,7 +2,9 @@
 const hamburger = document.querySelector(".hamburger");
 const navWrapper = document.querySelector(".nav-wrapper");
 const navbar = document.querySelector(".navbar");
+const heroCircles = document.querySelectorAll(".hero-decoration .decoration-circle");
 let lastScrollY = window.scrollY;
+let ticking = false;
 
 // 2. Control del Menú Móvil
 if (hamburger && navWrapper) {
@@ -23,33 +25,47 @@ if (hamburger && navWrapper) {
 
 // 3. Comportamiento de la Barra de Navegación (Versión Ultra-Respuesta)
 window.addEventListener('scroll', () => {
-  const currentScrollY = window.scrollY;
-  
-  // 1. Si el menú móvil está abierto, la barra se queda quieta
-  if (navWrapper && navWrapper.classList.contains('active')) {
-    navbar.classList.remove('navbar--hidden');
-    return;
-  }
+  if (!ticking) {
+    window.requestAnimationFrame(() => {
+      const currentScrollY = window.scrollY;
 
-  // 2. Si estamos cerca del tope de la web, FORZAR que aparezca siempre
-  if (currentScrollY < 100) {
-    navbar.classList.remove('navbar--hidden');
-    lastScrollY = currentScrollY;
-    return;
-  }
+      // Efecto Parallax para los círculos del Hero
+      if (heroCircles.length > 0) {
+        heroCircles[0].style.transform = `translateY(${currentScrollY * 0.1}px) rotate(${currentScrollY * 0.1}deg)`;
+        heroCircles[1].style.transform = `translateY(${currentScrollY * 0.2}px) rotate(-${currentScrollY * 0.15}deg)`;
+        heroCircles[2].style.transform = `translateY(${currentScrollY * 0.15}px) rotate(${currentScrollY * 0.2}deg)`;
+      }
+      
+      // 1. Si el menú móvil está abierto, la barra se queda quieta
+      if (navWrapper && navWrapper.classList.contains('active')) {
+        navbar.classList.remove('navbar--hidden');
+        ticking = false;
+        return;
+      }
 
-  // 3. Detectar dirección:
-  // Si la posición actual es MENOR que la anterior, es que estamos SUBIENDO.
-  if (currentScrollY < lastScrollY) {
-    // SUBIENDO -> Mostrar barra
-    navbar.classList.remove('navbar--hidden');
-  } else {
-    // BAJANDO -> Ocultar barra
-    navbar.classList.add('navbar--hidden');
+      // 2. Si estamos cerca del tope de la web, FORZAR que aparezca siempre
+      if (currentScrollY < 100) {
+        navbar.classList.remove('navbar--hidden');
+        lastScrollY = currentScrollY;
+        ticking = false;
+        return;
+      }
+
+      // 3. Detectar dirección:
+      if (currentScrollY > lastScrollY) {
+        // BAJANDO -> Ocultar barra
+        navbar.classList.add('navbar--hidden');
+      } else if (currentScrollY < lastScrollY) {
+        // SUBIENDO -> Mostrar barra
+        navbar.classList.remove('navbar--hidden');
+      }
+      
+      // Actualizar posición
+      lastScrollY = currentScrollY;
+      ticking = false;
+    });
+    ticking = true;
   }
-  
-  // Actualizar posición
-  lastScrollY = currentScrollY;
 }, { passive: true });
 
 // 4. Navegación Suave (Smooth Scroll)
@@ -68,14 +84,6 @@ const citaBtn = document.querySelector(".cita-btn");
 if (citaBtn) {
   citaBtn.addEventListener("click", () => {
     alert("Disponible: Agendar cita online próximamente. Mientras tanto, llámanos: +34 91 234 5678");
-  });
-}
-
-const heroBtn = document.querySelector(".hero-btn");
-if (heroBtn) {
-  heroBtn.addEventListener("click", () => {
-    const contacto = document.querySelector("#contacto");
-    if (contacto) contacto.scrollIntoView({ behavior: "smooth" });
   });
 }
 
@@ -99,7 +107,7 @@ const observer = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.1 });
 
-document.querySelectorAll(".servicio-card, .tech-card, .equipo-card").forEach(card => {
+document.querySelectorAll(".servicio-card, .tech-card, .equipo-card, .galeria-item").forEach(card => {
   card.style.opacity = "0";
   observer.observe(card);
 });
@@ -121,3 +129,42 @@ const reviewsCarousel = new Swiper('.reviews-carousel', {
     1024: { slidesPerView: 3, spaceBetween: 40 }
   }
 });
+
+// 7b. Configuración de Swiper (Carrusel de Marcas)
+const marcasCarousel = new Swiper('.marcas-carousel', {
+  loop: true,
+  speed: 4000, // Velocidad de la animación
+  autoplay: {
+    delay: 0, // Sin pausa entre transiciones
+    disableOnInteraction: false,
+    pauseOnMouseEnter: true, // Pausa al pasar el ratón por encima
+  },
+  slidesPerView: 'auto', // Muestra tantos como quepan en el contenedor
+  spaceBetween: 30, // Espacio entre marcas
+});
+
+// 8. Slideshow de Imágenes en Hero
+const heroSlideshow = () => {
+    const container = document.querySelector('.hero-image-slideshow');
+    if (!container) return; // Si no existe el contenedor, no hacer nada
+
+    const images = container.querySelectorAll('.hero-main-img');
+    if (images.length < 2) return; // No hay suficientes imágenes para un slideshow
+
+    let currentIndex = 0;
+    const slideInterval = 4000; // Tiempo en milisegundos (4 segundos)
+
+    setInterval(() => {
+        // Ocultar la imagen actual
+        images[currentIndex].classList.remove('is-visible');
+
+        // Calcular el índice de la siguiente imagen
+        currentIndex = (currentIndex + 1) % images.length;
+
+        // Mostrar la siguiente imagen
+        images[currentIndex].classList.add('is-visible');
+    }, slideInterval);
+};
+
+// Iniciar el slideshow
+heroSlideshow();
