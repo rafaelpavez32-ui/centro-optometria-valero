@@ -182,3 +182,29 @@ const heroSlideshow = () => {
 
 // Iniciar el slideshow
 heroSlideshow();
+
+// 9. Accordion para Tarjetas de Servicios y Tecnología
+const setupAccordion = (cardSelector) => {
+  const cards = document.querySelectorAll(cardSelector);
+  if (!cards.length) return;
+
+  cards.forEach(card => {
+    card.addEventListener('click', (e) => {
+      // Evitar que el click en un link dentro de la tarjeta la active/desactive
+      if (e.target.closest('a')) return;
+
+      const wasActive = card.classList.contains('active');
+
+      // Desactivar todas las demás tarjetas en el mismo contenedor
+      card.parentElement.querySelectorAll(cardSelector).forEach(c => c.classList.remove('active'));
+
+      // Activar la tarjeta clickeada solo si no estaba ya activa
+      if (!wasActive) {
+        card.classList.add('active');
+      }
+    });
+  });
+};
+
+setupAccordion('.servicio-card');
+setupAccordion('.tech-card');
