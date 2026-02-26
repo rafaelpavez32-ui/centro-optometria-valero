@@ -65,17 +65,23 @@ window.addEventListener('scroll', () => {
         return;
       }
 
-      // 3. Detectar dirección:
+      // 3. Detectar dirección con umbral para evitar "flickering"
+      // Si el movimiento es muy pequeño (menos de 15px), no hacemos nada para que no parpadee.
+      if (Math.abs(currentScrollY - lastScrollY) < 15) {
+        ticking = false;
+        return;
+      }
+
       if (currentScrollY > lastScrollY) {
         // BAJANDO -> Ocultar barra
         navbar.classList.add('navbar--hidden');
-      } else if (currentScrollY < lastScrollY) {
+      } else {
         // SUBIENDO -> Mostrar barra
         navbar.classList.remove('navbar--hidden');
       }
-      
-      // Actualizar posición
-      lastScrollY = currentScrollY;
+
+      // Actualizar la posición de scroll anterior.
+      lastScrollY = currentScrollY <= 0 ? 0 : currentScrollY;
       ticking = false;
     });
     ticking = true;
@@ -121,12 +127,44 @@ const observer = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.1 });
 
-document.querySelectorAll(".servicio-card, .tech-card, .equipo-card, .galeria-item").forEach(card => {
+document.querySelectorAll(".tech-card, .equipo-card, .galeria-item").forEach(card => {
   card.style.opacity = "0";
   observer.observe(card);
 });
 
-// 7. Configuración de Swiper (Carrusel de Reseñas - Corregido)
+// 7. Configuración de Swiper
+
+// 7a. Carrusel de Servicios
+const serviciosCarousel = new Swiper('.servicios-carousel', {
+  loop: true,
+  centeredSlides: true,
+  grabCursor: true,
+  autoplay: {
+    delay: 2500, // Reducido para que vaya más rápido
+    disableOnInteraction: false, // El autoplay no se detiene si el usuario interactúa
+    pauseOnMouseEnter: true, // Pausa el carrusel si el ratón está encima
+  },
+  effect: 'coverflow',
+  navigation: {
+    nextEl: '.servicios .swiper-button-next',
+    prevEl: '.servicios .swiper-button-prev',
+  },
+  coverflowEffect: {
+    rotate: 30, // Aumentar rotación para "esconder" más los laterales
+    stretch: 0, // Quitar espacio para que se junten más
+    depth: 100, // Profundidad del efecto 3D
+    modifier: 1,
+    slideShadows: false
+  },
+  // La clave está en los breakpoints para controlar cuántas se ven
+  breakpoints: {
+    320: { slidesPerView: 1.2 }, // En móvil se ve una y un poco de la siguiente
+    768: { slidesPerView: 2 },   // En tablet se ven dos
+    1024: { slidesPerView: 3 }  // En escritorio se ven tres
+  }
+});
+
+// 7b. Carrusel de Reseñas
 const reviewsCarousel = new Swiper('.reviews-carousel', {
   loop: true,
   speed: 5000, 
@@ -144,7 +182,7 @@ const reviewsCarousel = new Swiper('.reviews-carousel', {
   }
 });
 
-// 7b. Configuración de Swiper (Carrusel de Marcas)
+// 7c. Carrusel de Marcas
 const marcasCarousel = new Swiper('.marcas-carousel', {
   loop: true,
   speed: 4000, // Velocidad de la animación
@@ -184,6 +222,23 @@ const heroSlideshow = () => {
 heroSlideshow();
 
 // 9. Accordion para Tarjetas de Servicios y Tecnología
+
+// Lógica para expandir la tarjeta de servicio activa en el carrusel
+const handleServiciosAccordion = (swiper) => {
+  document.querySelectorAll('.servicios-carousel .servicio-card').forEach(c => c.classList.remove('active'));
+  const activeCard = swiper.slides[swiper.activeIndex].querySelector('.servicio-card');
+  if (activeCard) {
+    activeCard.classList.add('active');
+  }
+};
+
+serviciosCarousel.on('init', (swiper) => {
+  // Se usa un pequeño timeout para asegurar que la transición de apertura
+  // de la primera tarjeta se ejecute correctamente al cargar la página.
+  setTimeout(() => handleServiciosAccordion(swiper), 100);
+});
+serviciosCarousel.on('slideChangeTransitionEnd', handleServiciosAccordion);
+
 const setupAccordion = (cardSelector) => {
   const cards = document.querySelectorAll(cardSelector);
   if (!cards.length) return;
@@ -206,5 +261,4 @@ const setupAccordion = (cardSelector) => {
   });
 };
 
-setupAccordion('.servicio-card');
 setupAccordion('.tech-card');

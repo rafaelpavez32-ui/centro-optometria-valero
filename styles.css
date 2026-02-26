@@ -456,19 +456,34 @@ body.no-scroll {
 .servicios {
   padding: calc(var(--spacing) * 8) var(--spacing);
   background: transparent; /* Dejamos ver el fondo global */
-  perspective: 2000px; /* Perspectiva para el efecto 3D de las tarjetas */
   content-visibility: auto;
   contain-intrinsic-size: 1px 800px; /* Mejora rendimiento de renderizado */
+  position: relative; /* Para los botones de navegación */
+  overflow: hidden; /* Para contener el carrusel */
 }
 
 .servicio-card, .tech-card {
   cursor: pointer;
 }
 
-.servicios-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Reducido para mejor ajuste en tablets */
-  gap: calc(var(--spacing) * 2.5);
+.servicios-carousel {
+  width: 100%;
+  padding: calc(var(--spacing) * 4) 0;
+}
+
+.servicios-carousel .swiper-slide {
+  height: auto;
+  opacity: 0.7; /* Las tarjetas no activas están algo transparentes */
+  transition: opacity 0.4s ease;
+}
+
+.servicios-carousel .swiper-slide-active {
+  opacity: 1;
+}
+
+.servicios .swiper-button-next,
+.servicios .swiper-button-prev {
+  color: var(--primary);
 }
 
 .servicio-card {
@@ -488,15 +503,13 @@ body.no-scroll {
 
 .servicio-card:hover {
   /* El transform se controla con JS para el efecto 3D */
-  background: rgba(255, 255, 255, 0.95);
   box-shadow: 0 20px 50px rgba(0, 102, 204, 0.25); /* Sombra azulada al hover */
   transform: translateY(-10px) scale(1.02);
   border-top-color: var(--accent-light);
 }
-.servicio-card.active {
+.servicio-card.active { /* Esta clase la añade el JS para expandir el contenido */
   background: rgba(255, 255, 255, 0.95);
   box-shadow: 0 20px 50px rgba(0, 102, 204, 0.25);
-  transform: translateY(-10px) scale(1.02);
   border-top-color: var(--accent-light);
 }
 .servicio-icon {
@@ -506,7 +519,7 @@ body.no-scroll {
 }
 
 .servicio-card:hover .servicio-icon,
-.servicio-card.active .servicio-icon {
+.servicio-card.active .servicio-icon { /* El icono también cambia en la tarjeta activa */
   transform: scale(1.2) rotate(10deg);
   color: var(--accent-light);
 }
@@ -1231,8 +1244,8 @@ body.no-scroll {
   .contacto-info {
     display: none; /* Ocultamos los bloques de info en móvil para una UI más limpia */
   }
-  .tech-grid, .equipo-grid, .servicios-grid { 
-    grid-template-columns: repeat(2, 1fr); /* Unificamos a 2 columnas en móvil */
+  .tech-grid, .equipo-grid { 
+    grid-template-columns: 1fr;
     gap: var(--spacing); 
   }
   .form-row { grid-template-columns: 1fr; }
