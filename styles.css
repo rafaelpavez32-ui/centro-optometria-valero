@@ -184,11 +184,13 @@ body.no-scroll {
   transition: var(--transition);
 }
 
-.nav-links a:hover::after {
+.nav-links a:hover::after,
+.nav-links a.nav-link--active::after {
   width: 100%;
 }
 
-.nav-links a:hover {
+.nav-links a:hover,
+.nav-links a.nav-link--active {
   color: var(--accent-light);
 }
 
@@ -488,51 +490,61 @@ body.no-scroll {
 
 .servicio-card {
   /* TARJETA CRISTAL 3D */
-  background: rgba(255, 255, 255, 0.7); /* Blanco translúcido */
-  backdrop-filter: blur(10px); /* Desenfoque del fondo */
-  border: 1px solid rgba(255, 255, 255, 0.8); /* Borde brillante */
+  background-size: cover;
+  background-position: center;
   padding: calc(var(--spacing) * 2.5);
   border-radius: 20px; /* Bordes más redondeados y modernos */
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1); /* Sombra suave de color */
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Efecto rebote elástico */
-  border-top: 4px solid var(--accent);
   position: relative;
   will-change: transform; /* Mejora de rendimiento */
   overflow: hidden;
+  color: var(--white); /* Texto blanco para legibilidad */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Alinea el contenido arriba */
+  min-height: 350px; /* Altura mínima para que la imagen se vea bien */
+}
+
+/* Overlay para mejorar la legibilidad del texto sobre la imagen */
+.servicio-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom, rgba(10, 14, 39, 0.85) 0%, rgba(10, 14, 39, 0.2) 100%);
+  z-index: 0;
+  transition: background-color 0.4s ease;
 }
 
 .servicio-card:hover {
   /* El transform se controla con JS para el efecto 3D */
   box-shadow: 0 20px 50px rgba(0, 102, 204, 0.25); /* Sombra azulada al hover */
   transform: translateY(-10px) scale(1.02);
-  border-top-color: var(--accent-light);
 }
 .servicio-card.active { /* Esta clase la añade el JS para expandir el contenido */
-  background: rgba(255, 255, 255, 0.95);
   box-shadow: 0 20px 50px rgba(0, 102, 204, 0.25);
-  border-top-color: var(--accent-light);
-}
-.servicio-icon {
-  color: var(--accent);
-  margin-bottom: calc(var(--spacing) * 1.5);
-  transition: var(--transition);
 }
 
-.servicio-card:hover .servicio-icon,
-.servicio-card.active .servicio-icon { /* El icono también cambia en la tarjeta activa */
-  transform: scale(1.2) rotate(10deg);
-  color: var(--accent-light);
+/* Posiciona el contenido por encima del overlay */
+.servicio-card h3,
+.servicio-card .card-content,
+.servicio-card .card-toggler {
+  position: relative;
+  z-index: 1;
 }
 
 .servicio-card h3 {
   font-size: 1.3rem;
-  color: var(--primary);
+  color: var(--white);
   font-weight: 700;
   padding-right: 30px; /* Space for toggler */
 }
 
 .servicio-card p {
-  color: var(--text-light);
+  color: rgba(255, 255, 255, 0.85);
   line-height: 1.8;
 }
 
@@ -550,6 +562,18 @@ body.no-scroll {
   color: var(--accent-light);
   transform: translateX(5px);
 }
+
+/* --- Imágenes de fondo para cada especialidad --- */
+/* Nota: Reemplaza estas URLs con las de tus propias imágenes */
+.servicio-1 { background-image: url('examenes-visuales-completos.png'); }
+.servicio-2 { background-image: url('https://images.unsplash.com/photo-1511389026282-721898b38918?q=80&w=2070&auto=format&fit=crop'); }
+.servicio-3 { background-image: url('https://images.unsplash.com/photo-1618499133204-9330b58b5a9a?q=80&w=1974&auto=format&fit=crop'); }
+.servicio-4 { background-image: url('https://images.unsplash.com/photo-1628894225033-56a1763503e3?q=80&w=1964&auto=format&fit=crop'); }
+.servicio-5 { background-image: url('https://images.unsplash.com/photo-1504439259909-e415ee3178e9?q=80&w=2070&auto=format&fit=crop'); }
+.servicio-6 { background-image: url('https://images.unsplash.com/photo-1606311692336-26a48021c2f2?q=80&w=1974&auto=format&fit=crop'); }
+.servicio-7 { background-image: url('https://images.unsplash.com/photo-1601564825857-92a19594069f?q=80&w=2070&auto=format&fit=crop'); }
+.servicio-8 { background-image: url('https://images.unsplash.com/photo-1631217872316-99325253607c?q=80&w=2070&auto=format&fit=crop'); }
+.servicio-9 { background-image: url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=2070&auto=format&fit=crop'); }
 
 /* ========================================
    TECNOLOGÍA
@@ -809,6 +833,8 @@ body.no-scroll {
 .equipo-image {
   width: 100%;
   height: 200px; /* Altura ajustada para encajar en la tarjeta */
+  object-fit: cover; /* Asegura que la imagen cubra el espacio sin deformarse */
+  object-position: center; /* Centra la imagen */
   background: linear-gradient(135deg, var(--accent), var(--secondary));
   border-radius: 10px;
   margin-bottom: calc(var(--spacing) * 1.5);
@@ -1264,10 +1290,6 @@ body.no-scroll {
     line-height: 1.6;
   }
   .tech-icon svg {
-    width: 40px;
-    height: 40px;
-  }
-  .servicio-icon svg {
     width: 40px;
     height: 40px;
   }

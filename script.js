@@ -17,6 +17,8 @@ const hamburger = document.querySelector(".hamburger");
 const navWrapper = document.querySelector(".nav-wrapper");
 const navbar = document.querySelector(".navbar");
 const heroCircles = document.querySelectorAll(".hero-decoration .decoration-circle");
+const sections = document.querySelectorAll("main section[id]"); // Para Scrollspy
+const navLinks = document.querySelectorAll(".nav-links a"); // Para Scrollspy
 let lastScrollY = window.scrollY;
 let ticking = false;
 
@@ -79,6 +81,24 @@ window.addEventListener('scroll', () => {
         // SUBIENDO -> Mostrar barra
         navbar.classList.remove('navbar--hidden');
       }
+
+      // --- INICIO LÓGICA SCROLLSPY ---
+      let currentActiveSection = "";
+      sections.forEach((section) => {
+        const sectionTop = section.offsetTop;
+        // El 121 es para compensar la altura del nav y el scroll-padding-top
+        if (currentScrollY >= sectionTop - 121) {
+          currentActiveSection = section.getAttribute("id");
+        }
+      });
+
+      navLinks.forEach((link) => {
+        link.classList.remove("nav-link--active");
+        if (link.getAttribute("href").substring(1) === currentActiveSection) {
+          link.classList.add("nav-link--active");
+        }
+      });
+      // --- FIN LÓGICA SCROLLSPY ---
 
       // Actualizar la posición de scroll anterior.
       lastScrollY = currentScrollY <= 0 ? 0 : currentScrollY;
@@ -223,22 +243,6 @@ heroSlideshow();
 
 // 9. Accordion para Tarjetas de Servicios y Tecnología
 
-// Lógica para expandir la tarjeta de servicio activa en el carrusel
-const handleServiciosAccordion = (swiper) => {
-  document.querySelectorAll('.servicios-carousel .servicio-card').forEach(c => c.classList.remove('active'));
-  const activeCard = swiper.slides[swiper.activeIndex].querySelector('.servicio-card');
-  if (activeCard) {
-    activeCard.classList.add('active');
-  }
-};
-
-serviciosCarousel.on('init', (swiper) => {
-  // Se usa un pequeño timeout para asegurar que la transición de apertura
-  // de la primera tarjeta se ejecute correctamente al cargar la página.
-  setTimeout(() => handleServiciosAccordion(swiper), 100);
-});
-serviciosCarousel.on('slideChangeTransitionEnd', handleServiciosAccordion);
-
 const setupAccordion = (cardSelector) => {
   const cards = document.querySelectorAll(cardSelector);
   if (!cards.length) return;
@@ -250,8 +254,8 @@ const setupAccordion = (cardSelector) => {
 
       const wasActive = card.classList.contains('active');
 
-      // Desactivar todas las demás tarjetas en el mismo contenedor
-      card.parentElement.querySelectorAll(cardSelector).forEach(c => c.classList.remove('active'));
+      // Desactivar todas las tarjetas del mismo tipo para que solo una esté abierta
+      document.querySelectorAll(cardSelector).forEach(c => c.classList.remove('active'));
 
       // Activar la tarjeta clickeada solo si no estaba ya activa
       if (!wasActive) {
@@ -261,4 +265,5 @@ const setupAccordion = (cardSelector) => {
   });
 };
 
+setupAccordion('.servicio-card');
 setupAccordion('.tech-card');
